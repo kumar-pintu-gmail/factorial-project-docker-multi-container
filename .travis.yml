@@ -7,27 +7,27 @@ services:
 # Tell Travis to build the image using Dockerfile.dev
 # We are only testing react app as only it has testcases
 before_install:
-    - docker build -t kumar-pintu-gmail/react-test -f ./react-client/Dockerfile.dev ./react-client
-    - docker build -t kumar-pintu-gmail/express-test -f ./express-server/Dockerfile.dev ./express-server
+    - docker build -t kumarpintu/react-test -f ./react-client/Dockerfile.dev ./react-client
+    - docker build -t kumarpintu/express-test -f ./express-server/Dockerfile.dev ./express-server
 
 # Tell Travis how to run test suite 
 script:
-    - docker run -e CI=true kumar-pintu-gmail/react-test npm run test
-    - docker run -e CI-true kumar-pintu-gmail/express-test npm run test
+    - docker run -e CI=true kumarpintu/react-test npm run test
+    - docker run -e CI-true kumarpintu/express-test npm run test
 
 # Tell Travis to build production images
 after_success:
-    - docker build -t kumar-pintu-gmail/factorial-project-react-client:latest ./react-client
-    - docker build -t kumar-pintu-gmail/factorial-project-nginx:latest ./nginx
-    - docker build -t kumar-pintu-gmail/factorial-project-express-server:latest ./express-server
-    - docker build -t kumar-pintu-gmail/factorial-project-worker:latest ./worker
+    - docker build -t kumarpintu/factorial-project-react-client:latest ./react-client
+    - docker build -t kumarpintu/factorial-project-nginx:latest ./nginx
+    - docker build -t kumarpintu/factorial-project-express-server:latest ./express-server
+    - docker build -t kumarpintu/factorial-project-worker:latest ./worker
     # Login to docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Push images to docker hub
-    - docker push kumar-pintu-gmail/factorial-project-nginx:latest
-    - docker push kumar-pintu-gmail/factorial-project-express-server:latest
-    - docker push kumar-pintu-gmail/factorial-project-worker:latest
-    - docker push kumar-pintu-gmail/factorial-project-react-client:latest
+    - docker push kumarpintu/factorial-project-nginx:latest
+    - docker push kumarpintu/factorial-project-express-server:latest
+    - docker push kumarpintu/factorial-project-worker:latest
+    - docker push kumarpintu/factorial-project-react-client:latest
 
 # Tell Travis how to deploy code to AWS
 #deploy:
